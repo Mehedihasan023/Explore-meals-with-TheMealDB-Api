@@ -68,11 +68,11 @@ const showMealDetails=(meal)=>{
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
         </div>
         <div class="modal-body">
-        <img src="${meal.strMealThumb}" class="card-img-top" alt="">
-         <h4 class="mt-3">${meal.strMeal}</h4>
-         <h4>Country:${meal.strArea}</h4>
-         <h4>Category:${meal.strCategory}</h4>
-         <a href="${meal.strYoutube}" target="blank" class="btn btn-primary">How to make</a>
+        <img src="${meal?.strMealThumb}" class="card-img-top" alt="">
+         <h4 class="mt-3">${meal?.strMeal}</h4>
+         <p>Country: ${meal?.strArea}</p>
+         <P>Category: ${meal?.strCategory}</p>
+         <a href="${meal?.strYoutube}" target="blank" class="btn btn-primary">How to make</a>
         </div>
   </div>
  
