@@ -1,9 +1,14 @@
 // fetch data from api
 const loadData =(search)=>{
     const url=`https://www.themealdb.com/api/json/v1/1/search.php?s=${search}`
-   fetch(url)
-   .then(res=>res.json())
-   .then(data=>displayMeals(data.meals))
+    fetch(url)
+    .then(res=>res.json())
+    .then(data=>displayMeals(data.meals))
+//    handle error 
+   .catch(error=>{
+      alert('There is something  wrong with your search text or data is not loaded');
+      loadData('');
+   });
 }
 //  use display function to display loaded data
 const displayMeals=(meals)=>{
@@ -39,8 +44,7 @@ const loadMealDetails=(idMeal)=>{
 }
 //  use showMealDetails function to display single meal ddetails in modal
 const showMealDetails=(meal)=>{
-    
-    console.log(meal);
+
     const showDetails = document.getElementById('show-details');
      showDetails.innerHTML=``;
     const div = document.createElement('div');
