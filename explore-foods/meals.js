@@ -2,9 +2,7 @@
 // show the loading spinner when data is not fetched
 document.getElementById('spinner').style.display='block';
 const loadData = async(search)=>{
-   
-    const url=`https://www.themealdb.com/api/json/v1/1/search.php?s=${search}`
-        
+    const url=`https://www.themealdb.com/api/json/v1/1/search.php?s=${search}`      
 //    handle error 
     try{
         const res =await fetch(url)
@@ -13,15 +11,24 @@ const loadData = async(search)=>{
     }
     catch(error){
         console.log(error);
-        loadData('');
     }
-
 }
 //  use display function to display loaded data
 const displayMeals=(meals)=>{
+  const mealsContainer = document.getElementById('meals-container');
+//  check if the searched meal data is found
+  if(meals){
+    document.getElementById('meal-count').innerText=meals.length;
+    document.getElementById('meal-found').classList.add('d-none');
+  }
+  else{
+    document.getElementById('meal-found').classList.remove('d-none');
+    mealsContainer.innerHTML=``;
+    document.getElementById('meal-count').innerText=0;
+  }
     // close loading spinner when get the data
     document.getElementById('spinner').style.display='none';
-  const mealsContainer = document.getElementById('meals-container');
+ 
 //   clear the previous element
   mealsContainer.innerHTML=``;
   meals.forEach(meal=>{
@@ -30,11 +37,11 @@ const displayMeals=(meals)=>{
     mealDiv.classList=('col')
     mealDiv.innerHTML=`
     <div class="card hover-effect" >
-      <img src="${meal.strMealThumb}" class="card-img-top" alt="">
+      <img src="${meal?.strMealThumb}" class="card-img-top" alt="">
       <div class="card-body">
-        <h5 class="card-title">${meal.strMeal}</h5>
-        <p class="card-text">${meal.strInstructions.slice(0,200)}</p>
-        <button class="btn btn-primary" onclick="loadMealDetails(${meal.idMeal})"data-bs-toggle="modal" data-bs-target="#exampleModal" >Details</button
+        <h5 class="card-title">${meal?.strMeal}</h5>
+        <p class="card-text">${meal?.strInstructions.slice(0,200)}</p>
+        <button class="btn btn-primary" onclick="loadMealDetails(${meal?.idMeal})"data-bs-toggle="modal" data-bs-target="#exampleModal" >Details</button
       </div>
      
     </div>
@@ -87,5 +94,14 @@ const searchMeals=()=>{
       loadData(inputText);
       inputField.value='';
 }
+//  add enter keypress eventlistener
+const searchWithEnterKey = document.getElementById('input-field').addEventListener('keypress',(e)=>{
+  if(e.key=='Enter'){
+    searchMeals();
+  }
+})
+
+
+
 // search by empty string if user doesn't give any input value
 loadData('');
