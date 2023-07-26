@@ -20,11 +20,12 @@ const displayMeals=(meals)=>{
     const mealDiv = document.createElement('div');
     mealDiv.classList=('col')
     mealDiv.innerHTML=`
-    <div class="card hover-effect" onclick="loadMealDetails(${meal.idMeal})"data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <div class="card hover-effect" >
       <img src="${meal.strMealThumb}" class="card-img-top" alt="">
       <div class="card-body">
         <h5 class="card-title">${meal.strMeal}</h5>
         <p class="card-text">${meal.strInstructions.slice(0,200)}</p>
+        <button class="btn btn-primary" onclick="loadMealDetails(${meal.idMeal})"data-bs-toggle="modal" data-bs-target="#exampleModal" >Details</button
       </div>
      
     </div>
