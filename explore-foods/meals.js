@@ -1,17 +1,26 @@
 // fetch data from api
-const loadData =(search)=>{
+// show the loading spinner when data is not fetched
+document.getElementById('spinner').style.display='block';
+const loadData = async(search)=>{
+   
     const url=`https://www.themealdb.com/api/json/v1/1/search.php?s=${search}`
-    fetch(url)
-    .then(res=>res.json())
-    .then(data=>displayMeals(data.meals))
+        
 //    handle error 
-   .catch(error=>{
-      alert('There is something  wrong with your search text or data is not loaded');
-      loadData('');
-   });
+    try{
+        const res =await fetch(url)
+        const data =await res.json()
+        displayMeals(data.meals)
+    }
+    catch(error){
+        console.log(error);
+        loadData('');
+    }
+
 }
 //  use display function to display loaded data
 const displayMeals=(meals)=>{
+    // close loading spinner when get the data
+    document.getElementById('spinner').style.display='none';
   const mealsContainer = document.getElementById('meals-container');
 //   clear the previous element
   mealsContainer.innerHTML=``;
@@ -35,13 +44,17 @@ const displayMeals=(meals)=>{
   })
 }
 // fetch single meal data by id
-const loadMealDetails=(idMeal)=>{
+const loadMealDetails= async(idMeal)=>{
   
   const url =`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`
-    fetch(url)
-    .then(res=>res.json())
-    .then(data=> showMealDetails(data.meals[0]))
-
+  try{
+    const res = await  fetch(url)
+    const data =await res.json()
+    showMealDetails(data.meals[0])
+  }
+  catch(error){
+    console.log(error);
+  }
 }
 //  use showMealDetails function to display single meal ddetails in modal
 const showMealDetails=(meal)=>{
